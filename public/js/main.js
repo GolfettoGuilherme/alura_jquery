@@ -31,6 +31,13 @@
 	O resultado é um objeto que possui todos os valoes. Por exemplo para acessar o width podemos escrever:
 
 	valores.width
+
+		corpoTabela.append(linha); //add a string ao corpo do html depois dele 
+
+	corpoTabela.prepend(linha); //add a string ao corpo do html antes dele
+
+	a função .parent() também pode receber um seletor como argumento. 
+	Deste modo, ela irá procurar nos pais do elemento por alguém com o seletor especificado, por exemplo:
 */
 var tempoInicial = $("#tempo-digitacao").text();
 var campo = $(".campo-digitacao");
@@ -42,7 +49,7 @@ $(function() {
 		inicializaCronometro();
 		iniciaMarcadores();
 		$("#botao-reiniciar").click(reiniciaJogo);
-	}
+	}	
 );
 
 function atualizaTamanhoFrase(){
@@ -88,14 +95,19 @@ function inicializaCronometro(){
 			tempoRestante--;
 			$("#tempo-digitacao").text(tempoRestante);
 			if(tempoRestante < 1){
-				//inclui o atributo no elemento
-				campo.attr("disabled",true);
-				$("#botao-reiniciar").attr("disabled", false);
 				clearInterval(id); //para parar de funcionar a função
-				campo.toggleClass('campo-desativado'); //add uma classe html para essa tag
+				finalizaJogo();
 			}
 		},1000);
 	})	
+}
+
+function finalizaJogo(){
+	//inclui o atributo no elemento
+	campo.attr("disabled",true);
+	$("#botao-reiniciar").attr("disabled", false);
+	campo.toggleClass('campo-desativado'); //add uma classe html para essa tag
+	inserePlacar();
 }
 
 function reiniciaJogo(){
@@ -110,3 +122,4 @@ function reiniciaJogo(){
 	campo.removeClass('campo-errado');
 	campo.removeClass('campo-certa');
 }
+
